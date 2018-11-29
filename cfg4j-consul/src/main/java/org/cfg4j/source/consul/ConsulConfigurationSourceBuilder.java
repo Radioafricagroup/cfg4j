@@ -20,42 +20,28 @@ package org.cfg4j.source.consul;
  */
 public class ConsulConfigurationSourceBuilder {
 
-  private String host;
-  private int port;
+  private String url;
 
   /**
    * Construct {@link ConsulConfigurationSource}s builder
    * <p>
    * Default setup (override using with*() methods)
    * <ul>
-   * <li>host: localhost</li>
-   * <li>port: 8500</li>
+   * <li>url: http://localhost:8500</li>
    * </ul>
    */
   public ConsulConfigurationSourceBuilder() {
-    host = "localhost";
-    port = 8500;
+    url = "http://localhost:8500";
   }
 
   /**
-   * Set Consul host for {@link ConsulConfigurationSource}s built by this builder.
+   * Set Consul url for {@link ConsulConfigurationSource}s built by this builder.
    *
-   * @param host host to use
-   * @return this builder with Consul host set to provided parameter
+   * @param url url to use
+   * @return this builder with Consul url set to provided parameter
    */
-  public ConsulConfigurationSourceBuilder withHost(String host) {
-    this.host = host;
-    return this;
-  }
-
-  /**
-   * Set Consul port for {@link ConsulConfigurationSource}s built by this builder.
-   *
-   * @param port port to use
-   * @return this builder with Consul port set to provided parameter
-   */
-  public ConsulConfigurationSourceBuilder withPort(int port) {
-    this.port = port;
+  public ConsulConfigurationSourceBuilder withUrl(String url) {
+    this.url = url;
     return this;
   }
 
@@ -65,14 +51,11 @@ public class ConsulConfigurationSourceBuilder {
    * @return new {@link ConsulConfigurationSource}
    */
   public ConsulConfigurationSource build() {
-    return new ConsulConfigurationSource(host, port);
+    return new ConsulConfigurationSource(url);
   }
 
   @Override
   public String toString() {
-    return "ConsulConfigurationSource{" +
-        "host=" + host +
-        ", port=" + port +
-        '}';
+    return "ConsulConfigurationSource{ url=" + url +" }";
   }
 }

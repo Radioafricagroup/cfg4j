@@ -43,22 +43,19 @@ public class ConsulConfigurationSource implements ConfigurationSource {
 
   private KeyValueClient kvClient;
   private Map<String, String> consulValues;
-  private final String host;
+  private final String url;
   private final int port;
   private boolean initialized;
 
   /**
    * Note: use {@link ConsulConfigurationSourceBuilder} for building instances of this class.
    * <p>
-   * Read configuration from the Consul K-V store located at {@code host}:{@code port}.
+   * Read configuration from the Consul K-V store located at {@code url}.
    *
-   * @param host Consul host to connect to
-   * @param port Consul port to connect to
+   * @param url Consul utl to connect to
    */
-  ConsulConfigurationSource(String host, int port) {
-    this.host = requireNonNull(host);
-    this.port = port;
-
+  ConsulConfigurationSource(String url) {
+    this.url = requireNonNull(url);
     initialized = false;
   }
 
@@ -98,14 +95,13 @@ public class ConsulConfigurationSource implements ConfigurationSource {
   @Override
   public void init() {
     try {
-      LOG.info("Connecting to Consul client at " + host + ":" + port);
+      LOG.info("Connecting to Consul client at " + host );
       
-      String url = host + ":" + String.valueOf(port);
-      Consul consul = Consul.builder().withUrl(url).build();
+      Consul consul = Consul.builder().withUrl(host).build();
 
       kvClient = consul.keyValueClient();
     } catch (Exception e) {
-      throw new SourceCommunicationException("Can't connect to host " + host + ":" + port, e);
+      throw new SourceCommunicationException("Can't connect to host " + host , e);
     }
 
     initialized = true;
