@@ -43,7 +43,6 @@ public class ConsulConfigurationSource implements ConfigurationSource {
   private KeyValueClient kvClient;
   private Map<String, String> consulValues;
   private final String url;
-  private final int port;
   private boolean initialized;
 
   /**
